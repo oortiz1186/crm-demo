@@ -49,3 +49,7 @@ Pruebas de integración, migraciones revisadas, HTTPS, respaldos, observabilidad
 ## Supervisión comercial
 
 El panel **Supervisión** está disponible para ADMIN, COORDINACION (Responsable Comercial) y DIRECCION. Resume actividades vencidas, oportunidades abiertas sin actividad durante siete días, renovaciones con fecha próxima y carga por asesor. Desde el panel se pueden completar tareas autorizadas o abrir la Agenda con una oportunidad preseleccionada para programar seguimiento. Los datos se actualizan tras registrar cambios. No envía notificaciones automáticas y no accede a sistemas de producción.
+
+### Filtros de Supervisión
+
+El panel permite filtrar por asesor y por tipo de atención: actividades vencidas, oportunidades sin seguimiento y renovaciones próximas. Los filtros son locales a la vista y no cambian asignaciones ni registros. Los indicadores se recalculan para la selección actual.
