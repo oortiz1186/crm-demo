@@ -18,6 +18,7 @@ export default function Page(){
  const [tab,setTab]=useState('Inicio'),[clients,setClients]=useState<Client[]>([]),[ops,setOps]=useState<Opportunity[]>([]),[activities,setActivities]=useState<Activity[]>([]),[users,setUsers]=useState<User[]>([]),[report,setReport]=useState<Report|null>(null);
  const [message,setMessage]=useState(''),[busy,setBusy]=useState(false),[search,setSearch]=useState('');
  const [supervision,setSupervision]=useState<Supervision|null>(null);
+ const [supervisionVersion,setSupervisionVersion]=useState(0);
  const [quotes,setQuotes]=useState<Quote[]>([]);
  const [quoteForm,setQuoteForm]=useState({opportunityId:'',description:'',subtotal:'0',tax:'0',validUntil:'',notes:''});
  const [renewals,setRenewals]=useState<Renewal[]>([]),[renewalSummary,setRenewalSummary]=useState<{total:number;overdue:number;upcoming:number;undated:number;won:number}|null>(null);
@@ -30,8 +31,8 @@ export default function Page(){
  const [activityForm,setActivityForm]=useState({opportunityId:'',type:'TAREA',description:'',dueAt:''});
  const refresh=useCallback(async()=>{try{const [c,o,a,u,r,ren,q]=await Promise.all([api('clients'),api('opportunities'),api('activities'),api('users'),api('reports'),api('renewals'),api('quotes')]);setClients(c);setOps(o);setActivities(a);setUsers(u);setReport(r);setRenewals(ren.items);setRenewalSummary(ren.summary);setQuotes(q);}catch(e){setMessage(String(e));}},[]);
  useEffect(()=>{api('auth').then(d=>{setUser(d.user);if(d.user)refresh();}).catch(()=>{}).finally(()=>setReady(true));},[refresh]);
- const submit=async(path:string,method:string,body:unknown,after?:()=>void)=>{setBusy(true);setMessage('');try{await api(path,{method,body:JSON.stringify(body)});setMessage('Guardado correctamente');after?.();await refresh();}catch(e){setMessage(e instanceof Error?e.message:'Error');}finally{setBusy(false);}};
- useEffect(()=>{if(user&&['ADMIN','COORDINACION','DIRECCION'].includes(user.role)){api('supervision').then(setSupervision).catch(()=>setSupervision(null));}},[user,tab,activities,ops]);
+ const submit=async(path:string,method:string,body:unknown,after?:()=>void)=>{setBusy(true);setMessage('');try{await api(path,{method,body:JSON.stringify(body)});setMessage('Guardado correctamente');after?.();await refresh();setSupervisionVersion(v=>v+1);}catch(e){setMessage(e instanceof Error?e.message:'Error');}finally{setBusy(false);}};
+ useEffect(()=>{if(user&&['ADMIN','COORDINACION','DIRECCION'].includes(user.role)){api('supervision').then(setSupervision).catch(()=>setSupervision(null));}},[user,tab,activities,ops,supervisionVersion]);
  const mine=(o:Opportunity)=>user?.role==='ADMIN'||user?.role==='COORDINACION'||o.ownerId===user?.id;
  const agenda=useMemo(()=>activities.filter(a=>!a.completedAt).sort((a,b)=>(a.dueAt?new Date(a.dueAt).getTime():Infinity)-(b.dueAt?new Date(b.dueAt).getTime():Infinity)),[activities]);
  const filtered=useMemo(()=>clients.filter(c=>[c.name,c.rfc,c.phone].join(' ').toLowerCase().includes(search.toLowerCase())),[clients,search]);
