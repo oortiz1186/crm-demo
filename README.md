@@ -20,7 +20,7 @@ Inicio por rol, directorio de clientes, oportunidades por etapa, alta de cliente
 
 ## Permisos
 
-COORDINACION: gestión comercial general. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
+COORDINACION (nombre visible: Responsable Comercial): gestión comercial general, contacto con clientes, cotizaciones, cierre de ventas, renovaciones y asignación de oportunidades. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
 
 ## Pendiente para producción
 
