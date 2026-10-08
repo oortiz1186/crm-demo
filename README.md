@@ -1,0 +1,27 @@
+# MIDA CRM 360°
+
+CRM comercial independiente para MIDA: prospectos, renovaciones, venta cruzada, clientes, oportunidades, actividades y reportes.
+
+## Inicio
+
+1. Copiar `.env.example` a `.env` y configurar PostgreSQL **independiente**.
+2. `npm install`
+3. `npx prisma db push`
+4. `npm run seed` (solo entorno de desarrollo)
+5. `npm run dev`
+
+Usuarios demo tras seed: `dulce@mida.local`, `direccion@mida.local`, `asesor@mida.local`. Contraseña configurada mediante `SEED_PASSWORD` (mínimo 12 caracteres).
+
+**No conectar bases de producción.** Licencias MIDA es otro sistema; futura integración únicamente mediante API de consulta con credenciales de mínimo privilegio. El MVP no lee conversaciones personales de WhatsApp.
+
+## Funciones
+
+Inicio por rol, directorio de clientes, oportunidades por etapa, alta de clientes y oportunidades, cambio de etapa autorizado, actividades, reportes agregados y vínculo WhatsApp.
+
+## Permisos
+
+COORDINACION: gestión comercial general. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
+
+## Pendiente para producción
+
+Pruebas de integración, migraciones revisadas, HTTPS, respaldos, observabilidad, gestión de secretos, validación de permisos y configuración de correo. No desplegar en el servidor productivo sin revisión.
