@@ -18,6 +18,14 @@ Usuarios demo tras seed: `dulce@mida.local`, `direccion@mida.local`, `asesor@mid
 
 Inicio por rol, directorio de clientes, oportunidades por etapa, alta de clientes y oportunidades, cambio de etapa autorizado, actividades, reportes agregados y vínculo WhatsApp.
 
+## Renovaciones (desarrollo sin conexión a Licencias MIDA)
+
+- Crear una oportunidad con tipo `RENOVACION` y fecha objetivo (manual).
+- Consultar cola de trabajo en la pantalla **Renovaciones**, con prioridades: vencida, próximos 30 días, programada, sin fecha y cerrada.
+- Responsable Comercial y administrador pueden ajustar fechas de todas las renovaciones; asesores y Dirección únicamente las propias.
+- La fecha es **objetivo comercial**, no una vigencia certificada. Hasta que se implemente la API de Licencias MIDA, el CRM no puede confirmar fechas de vencimiento de certificados.
+- Endpoint autenticado `GET /api/renewals` con `?scope=mine` opcional. No existe integración de escritura con Licencias MIDA.
+
 ## Permisos
 
 COORDINACION (nombre visible: Responsable Comercial): gestión comercial general, contacto con clientes, cotizaciones, cierre de ventas, renovaciones y asignación de oportunidades. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
