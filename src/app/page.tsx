@@ -18,6 +18,7 @@ export default function Page(){
  const [tab,setTab]=useState('Inicio'),[clients,setClients]=useState<Client[]>([]),[ops,setOps]=useState<Opportunity[]>([]),[activities,setActivities]=useState<Activity[]>([]),[users,setUsers]=useState<User[]>([]),[report,setReport]=useState<Report|null>(null);
  const [message,setMessage]=useState(''),[busy,setBusy]=useState(false),[search,setSearch]=useState('');
  const [supervision,setSupervision]=useState<Supervision|null>(null);
+ const [advisorFilter,setAdvisorFilter]=useState('');
  const [supervisionVersion,setSupervisionVersion]=useState(0);
  const [quotes,setQuotes]=useState<Quote[]>([]);
  const [quoteForm,setQuoteForm]=useState({opportunityId:'',description:'',subtotal:'0',tax:'0',validUntil:'',notes:''});
