@@ -19,6 +19,7 @@ export default function Page(){
  const [message,setMessage]=useState(''),[busy,setBusy]=useState(false),[search,setSearch]=useState('');
  const [supervision,setSupervision]=useState<Supervision|null>(null);
  const [advisorFilter,setAdvisorFilter]=useState('');
+ const [priorityFilter,setPriorityFilter]=useState('TODAS');
  const [supervisionVersion,setSupervisionVersion]=useState(0);
  const [quotes,setQuotes]=useState<Quote[]>([]);
  const [quoteForm,setQuoteForm]=useState({opportunityId:'',description:'',subtotal:'0',tax:'0',validUntil:'',notes:''});
