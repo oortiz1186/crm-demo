@@ -18,6 +18,7 @@ model User {
   role Role @default(ASESOR)
   active Boolean @default(true)
   opportunities Opportunity[] @relation("Owner")
+  quotes Quote[]
   activities Activity[]
   createdAt DateTime @default(now())
 }
