@@ -34,6 +34,10 @@ export default function Page(){
  useEffect(()=>{api('auth').then(d=>{setUser(d.user);if(d.user)refresh();}).catch(()=>{}).finally(()=>setReady(true));},[refresh]);
  const submit=async(path:string,method:string,body:unknown,after?:()=>void)=>{setBusy(true);setMessage('');try{await api(path,{method,body:JSON.stringify(body)});setMessage('Guardado correctamente');after?.();await refresh();setSupervisionVersion(v=>v+1);}catch(e){setMessage(e instanceof Error?e.message:'Error');}finally{setBusy(false);}};
  useEffect(()=>{if(user&&['ADMIN','COORDINACION','DIRECCION'].includes(user.role)){api('supervision').then(setSupervision).catch(()=>setSupervision(null));}},[user,tab,activities,ops,supervisionVersion]);
+ const visibleOverdue=supervision?.overdue.filter(a=>!advisorFilter||a.opportunity.owner.name===advisorFilter)||[];
+ const visibleUnattended=supervision?.unattended.filter(o=>!advisorFilter||o.owner===advisorFilter)||[];
+ const visibleRenewals=supervision?.renewals.filter(o=>!advisorFilter||o.owner===advisorFilter)||[];
+ const visibleAdvisorStats=supervision?.byAdvisor.filter(a=>!advisorFilter||a.name===advisorFilter)||[];
  const mine=(o:Opportunity)=>user?.role==='ADMIN'||user?.role==='COORDINACION'||o.ownerId===user?.id;
  const agenda=useMemo(()=>activities.filter(a=>!a.completedAt).sort((a,b)=>(a.dueAt?new Date(a.dueAt).getTime():Infinity)-(b.dueAt?new Date(b.dueAt).getTime():Infinity)),[activities]);
  const filtered=useMemo(()=>clients.filter(c=>[c.name,c.rfc,c.phone].join(' ').toLowerCase().includes(search.toLowerCase())),[clients,search]);
