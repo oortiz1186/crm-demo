@@ -1,0 +1,77 @@
+generator client {
+  provider = "prisma-client-js"
+}
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+enum Role { ADMIN COORDINACION DIRECCION ASESOR }
+enum Stage { NUEVO CONTACTADO COTIZADO NEGOCIACION GANADO PERDIDO }
+enum Kind { RENOVACION NUEVO_CLIENTE VENTA_CRUZADA RETENCION }
+enum ActivityType { LLAMADA WHATSAPP CORREO COTIZACION TAREA NOTA }
+model User {
+  id String @id @default(cuid())
+  name String
+  email String @unique
+  passwordHash String
+  role Role @default(ASESOR)
+  active Boolean @default(true)
+  opportunities Opportunity[] @relation("Owner")
+  activities Activity[]
+  createdAt DateTime @default(now())
+}
+model Client {
+  id String @id @default(cuid())
+  name String
+  rfc String? @unique
+  phone String?
+  email String?
+  notes String?
+  externalLicenseClientId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  opportunities Opportunity[]
+}
+model Opportunity {
+  id String @id @default(cuid())
+  title String
+  product String
+  amount Decimal @default(0) @db.Decimal(14,2)
+  kind Kind @default(NUEVO_CLIENTE)
+  stage Stage @default(NUEVO)
+  clientId String
+  client Client @relation(fields:[clientId],references:[id])
+  ownerId String
+  owner User @relation("Owner",fields:[ownerId],references:[id])
+  expectedClose DateTime?
+  lostReason String?
+  notes String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  activities Activity[]
+  @@index([ownerId,stage])
+  @@index([clientId,product,stage])
+}
+model Activity {
+  id String @id @default(cuid())
+  type ActivityType
+  description String
+  dueAt DateTime?
+  completedAt DateTime?
+  opportunityId String
+  opportunity Opportunity @relation(fields:[opportunityId],references:[id],onDelete:Cascade)
+  userId String
+  user User @relation(fields:[userId],references:[id])
+  createdAt DateTime @default(now())
+  @@index([dueAt,completedAt])
+}
+model AuditLog {
+  id String @id @default(cuid())
+  actorId String
+  entity String
+  entityId String
+  action String
+  detail Json?
+  createdAt DateTime @default(now())
+  @@index([entity,entityId])
+}
