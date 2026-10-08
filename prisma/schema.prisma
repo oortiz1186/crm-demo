@@ -78,3 +78,23 @@ model AuditLog {
   createdAt DateTime @default(now())
   @@index([entity,entityId])
 }
+model Quote {
+ id String @id @default(cuid())
+ folio String @unique
+ opportunityId String
+ opportunity Opportunity @relation(fields:[opportunityId],references:[id])
+ createdById String
+ createdBy User @relation(fields:[createdById],references:[id])
+ status QuoteStatus @default(BORRADOR)
+ subtotal Decimal @db.Decimal(14,2)
+ tax Decimal @db.Decimal(14,2)
+ total Decimal @db.Decimal(14,2)
+ description String
+ validUntil DateTime?
+ sentAt DateTime?
+ acceptedAt DateTime?
+ notes String?
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ @@index([opportunityId,status])
+}
