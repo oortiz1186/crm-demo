@@ -9,6 +9,7 @@ type Renewal={id:string;title:string;product:string;amount:number;stage:string;o
 type Report={total:number;byStage:Record<string,{count:number;amount:number}>;byKind:Record<string,number>;wonAmount:number;openAmount:number};
 const stages=['NUEVO','CONTACTADO','COTIZADO','NEGOCIACION','GANADO','PERDIDO'];
 const kinds=['RENOVACION','NUEVO_CLIENTE','VENTA_CRUZADA','RETENCION'];
+const priority=(a:Activity)=>{if(a.completedAt)return 'COMPLETADA';if(!a.dueAt)return 'SIN_FECHA';const d=new Date(a.dueAt),now=new Date();const start=new Date(now.getFullYear(),now.getMonth(),now.getDate());return d<start?'VENCIDA':d<new Date(start.getTime()+86400000)?'HOY':d<new Date(start.getTime()+7*86400000)?'SEMANA':'PROGRAMADA';};
 const money=(n:number)=>new Intl.NumberFormat('es-MX',{style:'currency',currency:'MXN',maximumFractionDigits:0}).format(n);
 async function api(path:string,init?:RequestInit){const r=await fetch('/api/'+path,{...init,headers:{'Content-Type':'application/json',...init?.headers},cache:'no-store'});const j=await r.json();if(!r.ok)throw Error(j.error||'Error de conexión');return j;}
 export default function Page(){
