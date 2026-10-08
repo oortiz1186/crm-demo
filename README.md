@@ -30,6 +30,10 @@ Inicio por rol, directorio de clientes, oportunidades por etapa, alta de cliente
 
 Se agregó entidad `Quote`, API autenticada `/api/quotes` y pantalla **Cotizaciones**. Permite crear borradores por oportunidad, registrar subtotal/impuesto/total, vigencia y transiciones `BORRADOR → ENVIADA → ACEPTADA/RECHAZADA/VENCIDA`. Cada cambio de estado deja auditoría. Los asesores solo gestionan cotizaciones de oportunidades propias; coordinación y administrador gestionan todas. No se envían correos, no se genera PDF ni CFDI y el registro no equivale a facturación. **Pendiente de validar compilación y aplicar esquema en una base de desarrollo** mediante `npx prisma db push` (nunca sobre producción sin migración revisada).
 
+## Agenda comercial
+
+Las actividades pendientes se ordenan por fecha, con indicadores de vencidas, hoy, próximos siete días y sin fecha. El dashboard muestra vencidas y permite marcar actividades completadas o reabrirlas conforme a los permisos existentes. Los avisos son **visuales dentro del CRM**; no se ha implementado el envío automático de correos ni mensajes de WhatsApp. Las fechas se interpretan según la zona horaria del navegador para los indicadores visuales; antes de producción deberá fijarse una zona horaria de negocio común.
+
 ## Permisos
 
 COORDINACION (nombre visible: Responsable Comercial): gestión comercial general, contacto con clientes, cotizaciones, cierre de ventas, renovaciones y asignación de oportunidades. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
