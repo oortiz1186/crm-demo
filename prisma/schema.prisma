@@ -51,6 +51,7 @@ model Opportunity {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   activities Activity[]
+  quotes Quote[]
   @@index([ownerId,stage])
   @@index([clientId,product,stage])
 }
