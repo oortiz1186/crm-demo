@@ -34,6 +34,10 @@ Se agregó entidad `Quote`, API autenticada `/api/quotes` y pantalla **Cotizacio
 
 Las actividades pendientes se ordenan por fecha, con indicadores de vencidas, hoy, próximos siete días y sin fecha. El dashboard muestra vencidas y permite marcar actividades completadas o reabrirlas conforme a los permisos existentes. Los avisos son **visuales dentro del CRM**; no se ha implementado el envío automático de correos ni mensajes de WhatsApp. Las fechas se interpretan según la zona horaria del navegador para los indicadores visuales; antes de producción deberá fijarse una zona horaria de negocio común.
 
+## Supervisión comercial
+
+Pantalla y API `/api/supervision` exclusivas para Responsable Comercial, Dirección y Administrador. Resume actividades vencidas, oportunidades abiertas sin actividades en los últimos 7 días, renovaciones con fecha objetivo dentro de 30 días y conteos por asesor. Son alertas internas, no notificaciones push, correo ni WhatsApp. Los vencimientos de renovaciones son fechas comerciales manuales, no certificados de Licencias MIDA.
+
 ## Permisos
 
 COORDINACION (nombre visible: Responsable Comercial): gestión comercial general, contacto con clientes, cotizaciones, cierre de ventas, renovaciones y asignación de oportunidades. DIRECCION: reportes globales, creación y gestión de oportunidades propias. ASESOR: creación y edición de oportunidades propias. ADMIN: administración comercial y técnica. Todos consultan el directorio, sin acceso a chats personales.
