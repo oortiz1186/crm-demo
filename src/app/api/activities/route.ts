@@ -5,7 +5,7 @@ import { z } from 'zod';
 export async function GET(){
  const user=await sessionUser();if(!user)return NextResponse.json({error:'No autorizado'},{status:401});
  const where=user.role==='ADMIN'||user.role==='COORDINACION'?{}:{opportunity:{ownerId:user.id}};
- return NextResponse.json(await db.activity.findMany({where,include:{opportunity:{select:{title:true,client:{select:{name:true}}}}},orderBy:{createdAt:'desc'},take:300}));
+ return NextResponse.json(await db.activity.findMany({where,include:{opportunity:{select:{title:true,client:{select:{name:true}}}}},orderBy:[{dueAt:'asc'},{createdAt:'desc'}],take:500}));
 }
 export async function POST(req:Request){
  const user=await sessionUser();if(!user)return NextResponse.json({error:'No autorizado'},{status:401});
